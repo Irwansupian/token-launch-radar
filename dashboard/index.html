@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Token Launch Radar — pre-token protocols ranked by launch value</title>
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<header class="mast">
+  <div class="mast-in">
+    <div class="brand">
+      <div class="sweep" aria-hidden="true"></div>
+      <div>
+        <h1>Token Launch Radar</h1>
+        <p class="sub">Every protocol with no token yet, ranked by what its launch would be worth — and how to farm it.</p>
+      </div>
+    </div>
+    <p class="stamp" id="stamp">Reading the snapshot…</p>
+    <div class="stats" id="stats"></div>
+  </div>
+</header>
+
+<nav class="tabs" id="tabs" aria-label="Views">
+  <button data-view="board" class="on">The board</button>
+  <button data-view="live">Already trading</button>
+  <button data-view="method">How the ranking works</button>
+</nav>
+
+<main>
+  <section id="view-board">
+    <div class="controls">
+      <input id="q" type="search" placeholder="Search protocols, categories, chains…" aria-label="Search">
+      <select id="cat" aria-label="Category"></select>
+      <select id="chain" aria-label="Chain"></select>
+      <label class="toggle"><input type="checkbox" id="watch"> Watchlist only</label>
+      <span class="count" id="count"></span>
+    </div>
+    <div class="tablewrap">
+      <table id="board">
+        <thead><tr>
+          <th data-k="rank" class="num">Rank</th>
+          <th data-k="name">Protocol</th>
+          <th data-k="category">Category</th>
+          <th>Chains</th>
+          <th data-k="tvl_usd" class="num">TVL</th>
+          <th data-k="change_7d" class="num">7d TVL</th>
+          <th data-k="age_days" class="num">Age</th>
+          <th data-k="implied_value_usd" class="num">Implied launch value</th>
+        </tr></thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+    <p class="note">Implied launch value is the model's claim, not a forecast: TVL × the category's trading multiple,
+    tilted by 7-day momentum and time running with no token. Open any row for the full arithmetic and its farm plan.
+    Protocols whose token already trades are never ranked — they sit under “Already trading”, at the market's own values.</p>
+  </section>
+
+  <section id="view-live" hidden>
+    <p class="lede">These protocols already have a token. They are the calibration set: the market caps and TVLs below are
+    where the board's category multiples come from. Figures are the snapshot's own, as of the date in the header.</p>
+    <div class="tablewrap">
+      <table id="livet">
+        <thead><tr>
+          <th>Protocol</th><th>Symbol</th><th>Category</th>
+          <th class="num">TVL</th><th class="num">Market cap</th><th class="num">Cap / TVL</th><th class="num">7d TVL</th>
+        </tr></thead>
+        <tbody id="liverows"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="view-method" hidden>
+    <div id="method"></div>
+  </section>
+</main>
+
+<div class="scrim" id="scrim" hidden></div>
+<aside class="drawer" id="drawer" hidden aria-label="Protocol detail">
+  <button class="x" id="closex" aria-label="Close">×</button>
+  <div id="detail"></div>
+</aside>
+
+<footer>
+  <p>Built from one sealed snapshot; the page runs offline and recomputes every row's value from the model's
+  published constants before showing it. “Records no token” is the snapshot's record as of its date, not a promise about tomorrow.</p>
+</footer>
+
+<script src="../data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
